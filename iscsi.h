@@ -110,37 +110,37 @@ struct volume;
 #define ISCSI_MASK_NSG  0x03 // loginreq, loginrsp
 
 // Login Response / Status Classes
-#define ISCSI_SCLASS_SUCCESS		0x00
-#define ISCSI_SCLASS_REDIRECT		0x01
-#define ISCSI_SCLASS_INITIATOR_ERR	0x02
-#define ISCSI_SCLASS_TARGET_ERR		0x03
+#define ISCSI_SCLASS_SUCCESS        0x00
+#define ISCSI_SCLASS_REDIRECT        0x01
+#define ISCSI_SCLASS_INITIATOR_ERR    0x02
+#define ISCSI_SCLASS_TARGET_ERR        0x03
 
 // Login Response / Status Details
 // Class-0 (Success)
-#define ISCSI_SDETAIL_ACCEPT		0x00
+#define ISCSI_SDETAIL_ACCEPT        0x00
 
 // Class-1 (Redirection)
-#define ISCSI_SDETAIL_TGT_MOVED_TEMP	0x01
-#define ISCSI_SDETAIL_TGT_MOVED_PERM	0x02
+#define ISCSI_SDETAIL_TGT_MOVED_TEMP    0x01
+#define ISCSI_SDETAIL_TGT_MOVED_PERM    0x02
 
 // Class-2 (Initiator Error)
-#define ISCSI_SDETAIL_INIT_ERR		0x00
-#define ISCSI_SDETAIL_AUTH_FAILED	0x01
-#define ISCSI_SDETAIL_TGT_FORBIDDEN	0x02
-#define ISCSI_SDETAIL_TGT_NOT_FOUND	0x03
-#define ISCSI_SDETAIL_TGT_REMOVED	0x04
-#define ISCSI_SDETAIL_NO_VERSION	0x05
-#define ISCSI_SDETAIL_TOO_MANY_CONN	0x06
-#define ISCSI_SDETAIL_MISSING_FIELDS	0x07
-#define ISCSI_SDETAIL_CONN_ADD_FAILED	0x08
-#define ISCSI_SDETAIL_INV_SESSION_TYPE	0x09
-#define ISCSI_SDETAIL_SESSION_NOT_FOUND	0x0A
-#define ISCSI_SDETAIL_INV_REQ_TYPE	0x0B
+#define ISCSI_SDETAIL_INIT_ERR        0x00
+#define ISCSI_SDETAIL_AUTH_FAILED    0x01
+#define ISCSI_SDETAIL_TGT_FORBIDDEN    0x02
+#define ISCSI_SDETAIL_TGT_NOT_FOUND    0x03
+#define ISCSI_SDETAIL_TGT_REMOVED    0x04
+#define ISCSI_SDETAIL_NO_VERSION    0x05
+#define ISCSI_SDETAIL_TOO_MANY_CONN    0x06
+#define ISCSI_SDETAIL_MISSING_FIELDS    0x07
+#define ISCSI_SDETAIL_CONN_ADD_FAILED    0x08
+#define ISCSI_SDETAIL_INV_SESSION_TYPE    0x09
+#define ISCSI_SDETAIL_SESSION_NOT_FOUND    0x0A
+#define ISCSI_SDETAIL_INV_REQ_TYPE    0x0B
 
 // Class-3 (Target Error)
-#define ISCSI_SDETAIL_TARGET_ERROR	0x00
-#define ISCSI_SDETAIL_SVC_UNAVAILABLE	0x01
-#define ISCSI_SDETAIL_NO_RESOURCES	0x02
+#define ISCSI_SDETAIL_TARGET_ERROR    0x00
+#define ISCSI_SDETAIL_SVC_UNAVAILABLE    0x01
+#define ISCSI_SDETAIL_NO_RESOURCES    0x02
 
 // Logout Request Reason Code Mask
 #define ISCSI_MASK_REASONCODE 0x7F
@@ -168,7 +168,7 @@ enum event_iotype {
     EVENT_SOCKET = 1,
     EVENT_DISKRW = 2,
     EVENT_EVENT = 3,
-    EVENT_TOTAL  = 4
+    EVENT_TOTAL = 4
 }; // enum event_iotype
 
 
@@ -191,8 +191,8 @@ enum iscsi_session_type {
 union iscsi_sid {
 //#if __BYTE_ORDER == __BIG_ENDIAN
     struct {
-	uint8 isid[6];
-	uint8 tsih[2];
+        uint8 isid[6];
+        uint8 tsih[2];
     } id;
 /*
 #elif __BYTE_ORDER == __LITTLE_ENDIAN
@@ -206,16 +206,16 @@ union iscsi_sid {
 } __packed;
 
 enum iscsi_stage {
-    ISCSI_STAGE_START                   = 0x00,
+    ISCSI_STAGE_START = 0x00,
 //    ISCSI_STAGE_SECURITY                = 0x10,
 //    ISCSI_STAGE_SECURITY_NONE           = 0x11,
-    ISCSI_STAGE_SECURITY_CHAP_START = 0x1A,
-    ISCSI_STAGE_SECURITY_CHAP_CHALLENGE  = 0x1B,
+            ISCSI_STAGE_SECURITY_CHAP_START = 0x1A,
+    ISCSI_STAGE_SECURITY_CHAP_CHALLENGE = 0x1B,
 //    ISCSI_STAGE_SECURITY_CHAP_RESPONSE  = 0x1C,
-    ISCSI_STAGE_OPERATIONAL             = 0x20,
-    ISCSI_STAGE_FULL_FEATURE            = 0x30,
-    ISCSI_STAGE_CLOSE                   = 0xFE,
-    ISCSI_STAGE_FINISH                  = 0xFF
+            ISCSI_STAGE_OPERATIONAL = 0x20,
+    ISCSI_STAGE_FULL_FEATURE = 0x30,
+    ISCSI_STAGE_CLOSE = 0xFE,
+    ISCSI_STAGE_FINISH = 0xFF
 };
 
 enum iscsi_chap_algorithm {
@@ -251,21 +251,21 @@ struct iscsi_conn {
     char chap_r_exp_str[DIGEST_LEN_SHA1 * 2 + 2 + 1]; // DIGEST_LEN_MD5 < DIGEST_LEN_SHA1
 
     struct list list_volcmd;
-    
+
 //    struct volume_cmd *list_volcmd;
 //    uint32 list_volcmd->len;
 
     pthread_mutex_t lock_list_volcmd;
 
-#define DEFAULT_ERROR_RECOVERY_LEVEL	0
-#define DEFAULT_INITIAL_R2T		1
-#define DEFAULT_IMMEDIATE_DATA		1
-#define DEFAULT_MAX_BURST_LENGTH	(256*1024)
-#define DEFAULT_FIRST_BURST_LENGTH	(64*1024)
-#define DEFAULT_MAX_CONNECTIONS		1
-#define DEFAULT_DATA_PDU_IN_ORDER	1
-#define DEFAULT_DATA_SEQUENCE_IN_ORDER	1
-#define DEFAULT_MAX_OUTSTANDING_R2T	1
+#define DEFAULT_ERROR_RECOVERY_LEVEL    0
+#define DEFAULT_INITIAL_R2T        1
+#define DEFAULT_IMMEDIATE_DATA        1
+#define DEFAULT_MAX_BURST_LENGTH    (256*1024)
+#define DEFAULT_FIRST_BURST_LENGTH    (64*1024)
+#define DEFAULT_MAX_CONNECTIONS        1
+#define DEFAULT_DATA_PDU_IN_ORDER    1
+#define DEFAULT_DATA_SEQUENCE_IN_ORDER    1
+#define DEFAULT_MAX_OUTSTANDING_R2T    1
 #define DEFAULT_DEFAULT_TIME2WAIT   2
 #define DEFAULT_DEFAULT_TIME2RETAIN 20
 #define DEFAULT_HEADER_DIGEST DIGEST_NONE
@@ -344,7 +344,6 @@ struct iscsi_conn {
 
 #define SECTOR_SIZE_DEFAULT 512
 #define CAPACITY_DEFAULT (1024*1024*1024 / SECTOR_SIZE_DEFAULT)
-
 
 
 // 10.18.  NOP-Out
@@ -621,8 +620,8 @@ struct iscsi_bhs {
     // 4-7
 #if 0
     struct {
-	uint32 ahslen : 8; // ahs length
-	uint32 dslen : 24; // data segment length
+    uint32 ahslen : 8; // ahs length
+    uint32 dslen : 24; // data segment length
     } len;
 #else
     uint32 len;
@@ -723,7 +722,7 @@ struct iscsi_pdu {
     uint8 ubit; // scsirsp
     uint32 snack; // scsirsp
     uint32 brrcount; // scsirsp
-    
+
     uint32 statsn; // scsidata-in
     uint32 expcmdsn; // scsidata-in
     uint32 maxcmdsn; // scsidata-in
@@ -755,7 +754,7 @@ struct io_lap_time {
 
 struct iscsi_task {
     struct list_element listelem;
-    
+
     uint32 itt;
 
     struct iscsi_conn *conn;        // iscsi connection
@@ -777,24 +776,37 @@ struct iscsi_task {
 
 
 int iscsi_enqueue_and_tx_pdu(
-    struct iscsi_conn *conn,
-    struct iscsi_pdu *pdu);
+        struct iscsi_conn *conn,
+        struct iscsi_pdu *pdu);
 
 byte *iscsi_alloc_dsbuf(struct iscsi_conn *conn, uint32 dslen);
+
 int iscsi_free_dsbuf(struct iscsi_conn *conn, byte *ds, uint32 dslen);
+
 int iscsi_add_pdu_to_task(struct iscsi_conn *conn, struct iscsi_task *task, struct iscsi_pdu *pdu);
+
 struct iscsi_task *iscsi_search_task(struct iscsi_conn *conn, uint32 itt);
+
 void iscsi_unpack_pdu(struct iscsi_conn *conn, struct iscsi_pdu *pdu);
+
 void iscsi_pack_pdu(struct iscsi_conn *conn, struct iscsi_pdu *pdu);
+
 void iscsi_set_sn(struct iscsi_conn *conn, struct iscsi_pdu *pdu);
+
 struct iscsi_task *iscsi_create_task(struct iscsi_conn *conn, uint32 itt);
+
 int iscsi_remove_task(struct iscsi_conn *conn, struct iscsi_task *task);
+
 struct iscsi_pdu *iscsi_create_pdu(struct iscsi_conn *conn);
+
 void iscsi_remove_pdu(struct iscsi_conn *conn, struct iscsi_pdu *pdu);
+
 void iscsi_dump_pdu(struct iscsi_conn *conn, struct iscsi_pdu *pdu);
+
 void iscsi_dump_pdu_in_hex(struct iscsi_conn *conn, struct iscsi_pdu *pdu);
 
 struct volume_cmd *iscsi_alloc_volcmd(struct iscsi_conn *conn);
+
 int iscsi_free_volcmd(struct iscsi_conn *conn, struct volume_cmd *volcmd);
 
 #define LOCK_LIST_VOLCMD(conn) do { pthread_mutex_lock(&(conn->lock_list_volcmd)); } while (0)

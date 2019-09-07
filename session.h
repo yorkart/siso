@@ -43,10 +43,12 @@ struct iscsi_session {
 }; // iscsi_session
 
 struct iscsi_session *iscsi_create_session(
-    struct iscsi_target *target,
-    union iscsi_sid sid,
-    struct iscsi_conn *conn);
+        struct iscsi_target *target,
+        union iscsi_sid sid,
+        struct iscsi_conn *conn);
+
 int iscsi_destroy_session(struct iscsi_session *session);
+
 int iscsi_is_session_empty(struct iscsi_session *session);
 
 #define LOCK_CONNS(session) do { pthread_mutex_lock(&(session->lock_list_conn)); } while (0)

@@ -66,10 +66,13 @@ struct siso_info {
 #define UNLOCK_TARGETS(siso) do { pthread_mutex_unlock(&(siso->lock_list_target)); } while (0)
 
 int siso_init(struct siso_info *siso, const char *pathname_conf);
+
 uint16 siso_get_tsih(struct siso_info *siso);
+
 int siso_run(struct siso_info *siso);
 
 void siso_detach_connection(struct siso_info *siso, struct iscsi_conn *conn);
+
 void siso_attach_connection(struct siso_info *siso, struct iscsi_conn *conn);
 
 struct iscsi_target *siso_lookup_target(struct siso_info *siso, const char *target_name);

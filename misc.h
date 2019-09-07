@@ -82,8 +82,11 @@ enum log_level {
 void print_hex(char *buf, int len);
 
 int logger_init(char *pathname, int loglv);
+
 int logger_destroy(void);
+
 inline enum log_level logger_getlv(void);
+
 inline int logger_is_dbg3(void);
 
 #define log_ftl(...) do { if (logger_getlv() >= LOGLV_FTL) { logger_log(__FILE__, __FUNCTION__, __LINE__, "FTL ", __VA_ARGS__); } } while (0)
@@ -95,12 +98,12 @@ inline int logger_is_dbg3(void);
 #define log_dbg1(...) do { if (logger_getlv() >= LOGLV_DBG1) { logger_log(__FILE__, __FUNCTION__, __LINE__, "DBG1", __VA_ARGS__); } } while (0)
 
 inline int logger_log(
-    const char *file,
-    const char *func,
-    const int line,
-    const char *lv,
-    const char *format,
-    ...);
+        const char *file,
+        const char *func,
+        const int line,
+        const char *lv,
+        const char *format,
+        ...);
 
 #define ASSERT(exp, ...) do { if (!(exp)) { log_ftl(__VA_ARGS__); abort(); } } while (0)
 
@@ -122,10 +125,10 @@ struct list {
 }; // struct list
 
 
-#define do_each_list_elem(type, list, elem, list_elem)	\
+#define do_each_list_elem(type, list, elem, list_elem)    \
     (elem) = ((list)->head->body); do
 
-#define while_each_list_elem(type, list, elem, list_elem)			\
+#define while_each_list_elem(type, list, elem, list_elem)            \
     while ( ((elem) = (type)((elem)->list_elem.next->body)), elem != (list)->head->body )
 
 #define IOV_MAX 1024
@@ -137,40 +140,52 @@ struct iovecs {
 }; // struct iovecs
 
 void list_init(struct list *list);
+
 void listelem_init(struct list_element *elem, void *body);
 
 void list_add_elem(struct list *list, struct list_element *elem);
+
 void list_unlist_elem(struct list *list, struct list_element *elem);
+
 int list_is_empty(struct list *list);
+
 int list_is_elem_listed(struct list *list, struct list_element *elem);
+
 void *list_ref_head_elem(struct list *list);
+
 void *list_unlist_head_elem(struct list *list);
 
 
 void iovec_init(struct iovecs *iov);
+
 void iovec_add(struct iovecs *iov, void *data, int len);
+
 int iovec_rewind(struct iovecs *iov, int len_rw);
 
 void *malloc_safe(size_t size);
+
 void free_safe(void *ptr, size_t size);
 
 pid_t get_thread_id(void);
 
 int pack_kv(
-    byte *text,
-    uint32 textlen,
-    char *key,
-    char *valfmt,
-    ...);
+        byte *text,
+        uint32 textlen,
+        char *key,
+        char *valfmt,
+        ...);
+
 char *seek_value(char *text, int textlen, char *key);
+
 int convert_kv_format(
-    char *inbuf, int inbuflen,
-    char *outbuf, int outbuflen,
-    char delimiter,
-    char terminator,
-    int remove_blank);
+        char *inbuf, int inbuflen,
+        char *outbuf, int outbuflen,
+        char delimiter,
+        char terminator,
+        int remove_blank);
 
 int is_ipv4_mapped_ipv6_addr(const struct sockaddr_in6 *addr);
+
 uint64 get_time_in_usec(void);
 
 #endif // __MISC_H__

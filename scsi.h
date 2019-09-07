@@ -114,21 +114,25 @@ struct scsi_cmd {
 struct volume_cmd;
 
 int scsi_dump_cdb(
-    struct iscsi_conn *conn,
-    struct scsi_cmd *cmd);
+        struct iscsi_conn *conn,
+        struct scsi_cmd *cmd);
+
 int scsi_unpack_cdb(
-    struct iscsi_conn *conn,
-    struct iscsi_pdu *pdu,
-    struct scsi_cmd *cmd);
+        struct iscsi_conn *conn,
+        struct iscsi_pdu *pdu,
+        struct scsi_cmd *cmd);
 
 int iscsi_exec_scsi_cmd(
-    struct iscsi_conn *conn,
-    struct iscsi_pdu *pdu);
+        struct iscsi_conn *conn,
+        struct iscsi_pdu *pdu);
+
 int iscsi_exec_scsi_cmd_completion(
-    struct iscsi_conn *conn,
-    struct iscsi_pdu *pdu_req,
-    struct volume_cmd *cmd);
+        struct iscsi_conn *conn,
+        struct iscsi_pdu *pdu_req,
+        struct volume_cmd *cmd);
+
 uint64 scsi_pack_lun(uint16 lun);
+
 uint16 scsi_unpack_lun(uint64 lun);
 
 
